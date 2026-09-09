@@ -1,0 +1,30 @@
+.Header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.733);
+    backdrop-filter: blur(12px);
+    gap: 100px;
+    height: 100px;
+}
+
+.logo {
+    width: 400px;
+    
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+a {
+    color: rgb(250, 250, 250);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+a:hover {
+    transform: scale(1.1);
+    color: rgb(84, 211, 0);
+}

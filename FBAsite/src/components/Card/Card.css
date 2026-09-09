@@ -1,0 +1,42 @@
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s ease;
+} 
+
+.card:hover {
+    background-color: #e6ffe4;
+    transform: scale(1.05);
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.5s ease;
+}
+
+button:hover {
+    background-color: #4553a0;
+    transform: scale(1.05);
+}
+video {
+    width: 300px;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
+}
