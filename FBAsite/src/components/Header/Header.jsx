@@ -7,9 +7,9 @@ function Header() {
         <img src={FBALOGO} alt=""  className='logo'/>
         <nav>
             
-            <a href="/install"> install </a>
+            <a href="https://modrinth.com/mod/fresh-block-animations"> install </a>
             <a href="/">animations</a>
-            <a href="/updates">updates</a>
+            {/* <a href="/updates">updates</a> */}
         </nav>
         </div>
 
