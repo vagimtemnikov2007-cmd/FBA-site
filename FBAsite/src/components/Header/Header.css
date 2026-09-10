@@ -28,3 +28,23 @@ a:hover {
     transform: scale(1.1);
     color: rgb(84, 211, 0);
 }
+
+
+@media screen and (max-width: 768px) {
+
+    .Header {
+        
+        height: auto;
+        gap: 10px;
+    }
+
+    .logo {
+        width: 200px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+}

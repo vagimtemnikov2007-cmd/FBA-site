@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Routes , Route} from 'react-router-dom'
-import HomeLayout from './layout/HomeLaout/HomeLayout'
+import HomeLayout from './layout/HomeLayout/Homelayout'
 import './App.css'
 
 function App() {
