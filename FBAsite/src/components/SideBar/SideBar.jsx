@@ -3,6 +3,7 @@ import './SideBar.css'
 function SideBar() {
 
     let SORT_BY = "Most Recent"
+    
     return (
         <>
         <div className="sidebar">

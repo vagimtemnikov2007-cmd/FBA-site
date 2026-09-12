@@ -2,16 +2,14 @@ import React from 'react';
 import './Homelayout.css';
 
 import Header from '../../components/Header/Header';
-import AnimationsPage from '../../pages/Animations';
-import SideBar from '../../components/SideBar/SideBar';
+import HomePage from '../../pages/Home/Home';
 
-function HomeLayout({ children }) {
+function HomeLayout() {
     return (
         <>
         <Header />
         <div className="home-layout">
-            <AnimationsPage />
-            <SideBar />
+            <HomePage />
         </div>
         </>
     );
