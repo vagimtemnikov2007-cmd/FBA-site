@@ -9,11 +9,7 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx">
-      const redirectPath = sessionStorage.getItem('redirectPath');
-      if (redirectPath) {
-        sessionStorage.removeItem('redirectPath');
-        window.location.href = redirectPath;
-      }
+
     </script>
   </body>
 </html>
