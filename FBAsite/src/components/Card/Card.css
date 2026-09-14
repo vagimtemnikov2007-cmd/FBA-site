@@ -1,5 +1,5 @@
 .card {
-    background-color: #fff;
+    background-color: #f1f1f1;
     border: 1px solid #ddd;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     transition: 0.5s ease;
+
 } 
 
 .card:hover {
@@ -39,4 +40,8 @@ video {
     height: auto;
     border-radius: 4px;
     margin-top: 10px;
+}
+
+p {
+    margin: 3px;
 }

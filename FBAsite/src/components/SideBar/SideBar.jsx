@@ -7,7 +7,9 @@ function SideBar() {
     return (
         <>
         <div className="sidebar">
+            <input className="search-input" type="text" placeholder="Search..." />
             <button>Sort by: {SORT_BY}</button>
+            <button className="add-animation-button">+ ADD YOUR ANIMATION</button>
         </div>
         </>
     )

@@ -1,10 +1,19 @@
 import "./Card.css"
-function Card({ name, photoUrl, link }) {
+function Card({  name,
+  author,
+  previewUrl,
+  downloadUrl,
+  created_at
+}) {
     return(
         <div className="card">
             <h2>{name}</h2>
-            <video src={photoUrl} alt="" autoPlay loop />
-            <button ><a href={link} target="_blank" rel="noopener noreferrer">Download</a></button>
+            <p>by {author}</p>
+            <p>
+  publish: {new Date(created_at).toLocaleDateString("en-US")}
+</p>
+            <video src={previewUrl} alt="" autoPlay loop />
+            <button ><a href={downloadUrl} target="_blank" rel="noopener noreferrer">Download</a></button>
         </div>
     )
 }
