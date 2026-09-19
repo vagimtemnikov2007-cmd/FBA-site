@@ -3,3 +3,9 @@
     flex-direction: row;
     align-items: flex-start;
 }
+
+@media (max-width: 768px) {
+    .animations-layout {
+        flex-direction: column-reverse;
+    }
+}

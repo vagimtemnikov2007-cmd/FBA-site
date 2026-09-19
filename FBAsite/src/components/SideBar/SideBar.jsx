@@ -1,8 +1,9 @@
 import React from "react";
+import Modal from "../ModalWindow/ModalWindow"
 import "./SideBar.css";
 import { SORT_TYPES } from "../../service/SortAnimations";
 
-function SideBar({ sortType, setSortType, searchQuery, setSearchQuery }) {
+function SideBar({ sortType, setSortType, searchQuery, setSearchQuery, setIsOpenModal }) {
     function changeSort() {
         if (sortType === SORT_TYPES.NEWEST) {
             setSortType(SORT_TYPES.NAME);
@@ -31,7 +32,7 @@ function SideBar({ sortType, setSortType, searchQuery, setSearchQuery }) {
                 Sort by: {sortLabel}
             </button>
 
-            <button className="add-animation-button">
+            <button className="add-animation-button" onClick={() => setIsOpenModal(true)}>
                 + ADD YOUR ANIMATION
             </button>
 

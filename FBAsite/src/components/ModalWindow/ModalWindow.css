@@ -1,0 +1,23 @@
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 1000;
+    background-color: aliceblue;
+    padding: 10px;
+    border-radius: 16px;
+    box-shadow: 0px 1px 10px black;
+    transition: 0.5s ease;
+}
+
+
+
+.modal.closed {
+    opacity: 0;
+    pointer-events: none;
+}
+.modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
