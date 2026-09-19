@@ -81,6 +81,7 @@ function AnimationsPage({ sortType, searchQuery }) {
             {sortedAnimations.map((animation) => (
                 <Card
                     key={animation.id}
+                    id= {animation.id}
                     name={animation.name}
                     author={animation.author}
                     previewUrl={animation.preview_url}

@@ -10,3 +10,21 @@ if (!response.ok) {
 
 return response.json()
 }
+
+export async function trackDownload(animationId) {
+    const response = await fetch(`${API_URL}/downloads`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            animationId,
+        }),
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to track download");
+    }
+
+    return response.json();
+}
