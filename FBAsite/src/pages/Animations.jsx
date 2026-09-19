@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Card from "../components/Card/Card";
 import { getAnimations } from "../service/api";
+import { sortAnimations } from "../service/SortAnimations";
 import "./Animations.css";
 
 const CACHE_KEY = "fba_animations";
@@ -24,17 +25,17 @@ function getCachedAnimations() {
         return parsed.data ?? [];
     } catch (error) {
         console.error("Failed to read animations cache:", error);
-
         localStorage.removeItem(CACHE_KEY);
-
         return [];
     }
 }
 
-function AnimationsPage() {
+function AnimationsPage({ sortType, searchQuery }) {
     const [animations, setAnimations] = useState(() =>
         getCachedAnimations()
     );
+
+    
 
     useEffect(() => {
         async function loadAnimations() {
@@ -48,7 +49,7 @@ function AnimationsPage() {
                     JSON.stringify({
                         version: CACHE_VERSION,
                         updatedAt: Date.now(),
-                        data: data
+                        data
                     })
                 );
             } catch (error) {
@@ -59,9 +60,25 @@ function AnimationsPage() {
         loadAnimations();
     }, []);
 
+    const filteredAnimations = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+
+    if (!query) {
+        return animations;
+    }
+
+    return animations.filter((animation) =>
+        animation.name.toLowerCase().includes(query)
+    );
+}, [animations, searchQuery]);
+
+    const sortedAnimations = useMemo(() => {
+    return sortAnimations(filteredAnimations, sortType);
+}, [filteredAnimations, sortType]);
+
     return (
         <div className="animations-container">
-            {animations.map((animation) => (
+            {sortedAnimations.map((animation) => (
                 <Card
                     key={animation.id}
                     name={animation.name}
