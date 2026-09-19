@@ -7,6 +7,9 @@ import "./Animations.css";
 const CACHE_KEY = "fba_animations";
 const CACHE_VERSION = 1;
 
+const RETRY_COUNT = 3;
+const RETRY_DELAY = 1500;
+
 function getCachedAnimations() {
     try {
         const cached = localStorage.getItem(CACHE_KEY);
@@ -30,58 +33,110 @@ function getCachedAnimations() {
     }
 }
 
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function getAnimationsWithRetry() {
+    let lastError;
+
+    for (let attempt = 1; attempt <= RETRY_COUNT; attempt++) {
+        try {
+            return await getAnimations();
+        } catch (error) {
+            lastError = error;
+
+            console.warn(
+                `Failed to load animations. Attempt ${attempt}/${RETRY_COUNT}`,
+                error
+            );
+
+            if (attempt < RETRY_COUNT) {
+                await sleep(RETRY_DELAY * attempt);
+            }
+        }
+    }
+
+    throw lastError;
+}
+
 function AnimationsPage({ sortType, searchQuery }) {
     const [animations, setAnimations] = useState(() =>
         getCachedAnimations()
     );
 
-    
+    const [loading, setLoading] = useState(animations.length === 0);
+    const [error, setError] = useState(false);
+
+    async function loadAnimations() {
+        try {
+            setError(false);
+
+            const data = await getAnimationsWithRetry();
+
+            setAnimations(data);
+
+            localStorage.setItem(
+                CACHE_KEY,
+                JSON.stringify({
+                    version: CACHE_VERSION,
+                    updatedAt: Date.now(),
+                    data
+                })
+            );
+        } catch (error) {
+            console.error("Failed to load animations:", error);
+            setError(true);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        async function loadAnimations() {
-            try {
-                const data = await getAnimations();
-
-                setAnimations(data);
-
-                localStorage.setItem(
-                    CACHE_KEY,
-                    JSON.stringify({
-                        version: CACHE_VERSION,
-                        updatedAt: Date.now(),
-                        data
-                    })
-                );
-            } catch (error) {
-                console.error("Failed to load animations:", error);
-            }
-        }
-
         loadAnimations();
     }, []);
 
     const filteredAnimations = useMemo(() => {
-    const query = searchQuery.trim().toLowerCase();
+        const query = searchQuery.trim().toLowerCase();
 
-    if (!query) {
-        return animations;
-    }
+        if (!query) {
+            return animations;
+        }
 
-    return animations.filter((animation) =>
-        animation.name.toLowerCase().includes(query)
-    );
-}, [animations, searchQuery]);
+        return animations.filter((animation) =>
+            animation.name.toLowerCase().includes(query)
+        );
+    }, [animations, searchQuery]);
 
     const sortedAnimations = useMemo(() => {
-    return sortAnimations(filteredAnimations, sortType);
-}, [filteredAnimations, sortType]);
+        return sortAnimations(filteredAnimations, sortType);
+    }, [filteredAnimations, sortType]);
+
+    if (loading && animations.length === 0) {
+        return (
+            <div className="animations-status">
+                Loading animations...
+            </div>
+        );
+    }
+
+    if (error && animations.length === 0) {
+        return (
+            <div className="animations-status">
+                <p>Failed to load animations.</p>
+                <button onClick={loadAnimations}>
+                    Try again
+                </button>
+            </div>
+        );
+    }
 
     return (
         <div className="animations-container">
             {sortedAnimations.map((animation) => (
                 <Card
                     key={animation.id}
-                    id= {animation.id}
+                    id={animation.id}
                     name={animation.name}
                     author={animation.author}
                     previewUrl={animation.preview_url}
