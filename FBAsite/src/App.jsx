@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes , Route} from 'react-router-dom'
 import AnimationsLayout from './layout/AnimationsLayout/Animationslayout'
 import HomeLayout from './layout/HomeLayout/Homelayout'
+import { trackVisitor } from './service/api'
 import './App.css'
 
 
@@ -13,35 +14,35 @@ function getVisitorID() {
     }
     return id;
     
+    
 }
 
 function App() {
 
-  useEffect(() => {
-    const today = new Date().toISOString().slice(0, 10)
-    const lastVisitDate = localStorage.getItem('lastVisitDate')
+useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    const lastVisitDate = localStorage.getItem("lastVisitDate");
 
-    if (!lastVisitDate || lastVisitDate !== today) {
-      const visitorId = getVisitorID()
+    if (lastVisitDate === today) {
+        return;
+    }
 
-      fetch('https://fba-server.onrender.com/visitors', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ visitorId }),
-      })
-        .then(response => response.json())
+    const visitorId = getVisitorID();
+
+    trackVisitor(visitorId)
         .then(data => {
-          console.log('Visitor ID sent to server:', data)
+            console.log("Visitor tracked:", data);
 
-          localStorage.setItem('lastVisitDate', today)
+            localStorage.setItem("lastVisitDate", today);
         })
         .catch(error => {
-          console.error('Error sending visitor ID to server:', error)
-        })
-    }
-  }, [])
+            console.error(
+                "Failed to track visitor after retries:",
+                error
+            );
+        });
+
+}, []);
 
   return (
     <>
