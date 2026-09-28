@@ -1,23 +1,79 @@
 .modal {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.55);
+
     z-index: 1000;
-    background-color: aliceblue;
-    padding: 10px;
-    border-radius: 16px;
-    box-shadow: 0px 1px 10px black;
-    transition: 0.5s ease;
 }
-
-
 
 .modal.closed {
-    opacity: 0;
-    pointer-events: none;
+    display: none;
 }
+
 .modal.open {
-    opacity: 1;
-    pointer-events: all;
+    display: flex;
+}
+
+.modal-content {
+    width: min(500px, 90vw);
+
+    background: white;
+    padding: 30px;
+
+    border: 2px solid black;
+}
+
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-content label {
+    font-weight: 600;
+}
+
+.modal-content input {
+    padding: 10px;
+
+    border: 1px solid #aaa;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+
+    margin-top: 10px;
+}
+
+.modal-buttons button {
+    padding: 10px 16px;
+    cursor: pointer;
+}
+
+.modal-buttons button:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+.modal-error {
+    margin: 0;
+
+    color: #c00;
+}
+
+.modal-success {
+    margin: 0;
+
+    color: #087a20;
+}
+
+.selected-file {
+    margin: 0;
+    font-size: 14px;
 }
