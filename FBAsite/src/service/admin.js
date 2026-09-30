@@ -197,3 +197,96 @@ export async function getSubmissions() {
 
     return data.submissions;
 }
+
+export async function approveSubmission(
+    submissionId
+) {
+    const visitorId =
+        getVisitorId();
+
+    const response = await fetch(
+        `${API_URL}/admin/submissions/${submissionId}/approve`,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                    "application/json",
+            },
+
+            body: JSON.stringify({
+                visitorId,
+            }),
+        }
+    );
+
+
+    let data;
+
+    try {
+        data =
+            await response.json();
+    } catch {
+        throw new Error(
+            `Invalid server response (${response.status})`
+        );
+    }
+
+
+    if (!response.ok) {
+        throw new Error(
+            data.error ||
+            "Failed to approve submission"
+        );
+    }
+
+
+    return data;
+}
+
+
+export async function rejectSubmission(
+    submissionId
+) {
+    const visitorId =
+        getVisitorId();
+
+    const response = await fetch(
+        `${API_URL}/admin/submissions/${submissionId}/reject`,
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                    "application/json",
+            },
+
+            body: JSON.stringify({
+                visitorId,
+            }),
+        }
+    );
+
+
+    let data;
+
+    try {
+        data =
+            await response.json();
+    } catch {
+        throw new Error(
+            `Invalid server response (${response.status})`
+        );
+    }
+
+
+    if (!response.ok) {
+        throw new Error(
+            data.error ||
+            "Failed to reject submission"
+        );
+    }
+
+
+    return data;
+}

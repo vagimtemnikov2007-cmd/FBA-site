@@ -108,7 +108,7 @@ function SideBar({
                         className="add-animation-button"
                         onClick={() => setModalType("submissions")}
                     >
-                        New animations: {countSubmissionsAnimations}
+                        New animations
                     </button>
                 </>
             )}
