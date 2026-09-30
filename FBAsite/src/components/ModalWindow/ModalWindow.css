@@ -77,3 +77,20 @@
     margin: 0;
     font-size: 14px;
 }
+
+.submission-card {
+    padding: 16px;
+    margin-bottom: 12px;
+
+    border: 1px solid #aaa;
+}
+
+.submission-card h3 {
+    margin-top: 0;
+}
+
+.submission-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}

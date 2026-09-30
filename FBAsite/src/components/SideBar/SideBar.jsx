@@ -11,7 +11,7 @@ function SideBar({
     setSortType,
     searchQuery,
     setSearchQuery,
-    setIsOpenModal,
+    setModalType,
 }) {
 
     const [isAdmin, setIsAdmin] = useState(false);
@@ -89,40 +89,26 @@ function SideBar({
 
             <button
                 className="add-animation-button"
-                onClick={() =>
-                    setIsOpenModal(true)
-                }
+                onClick={() => setModalType("submit")}
             >
                 + ADD YOUR ANIMATION
             </button>
 
 
-            {/* ADMIN BUTTONS */}
-
             {isAdmin && (
                 <>
                     <button
                         className="add-animation-button"
-                        onClick={() => {
-                            console.log(
-                                "Open admin add animation"
-                            );
-                        }}
+                        onClick={() => setModalType("admin-add")}
                     >
                         + ADD ANIMATION
                     </button>
 
-
                     <button
                         className="add-animation-button"
-                        onClick={() => {
-                            console.log(
-                                "Open submissions"
-                            );
-                        }}
+                        onClick={() => setModalType("submissions")}
                     >
-                        New animations:{" "}
-                        {countSubmissionsAnimations}
+                        New animations: {countSubmissionsAnimations}
                     </button>
                 </>
             )}
