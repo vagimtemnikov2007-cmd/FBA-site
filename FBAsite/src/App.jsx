@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Routes , Route} from 'react-router-dom'
 import AnimationsLayout from './layout/AnimationsLayout/Animationslayout'
 import HomeLayout from './layout/HomeLayout/Homelayout'
+import HelpLayout from './layout/Help/HelpLayout'
 import { trackVisitor } from './service/api'
 import './App.css'
 
@@ -49,6 +50,7 @@ useEffect(() => {
     <Routes>
       <Route path='/animations' element={<AnimationsLayout />}/>
       <Route path='/' element={<HomeLayout />}/>
+      <Route path='/Help' element={<HelpLayout />}/>
     </Routes>
     </>
   )

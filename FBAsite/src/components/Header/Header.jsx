@@ -11,6 +11,7 @@ function Header() {
             <NavLink to="/" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Home</NavLink>
             <a href="https://modrinth.com/mod/fresh-block-animations"> install </a>
             <NavLink to="/animations" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>animations</NavLink>
+            <NavLink to="/Help" className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}>Help</NavLink>
             {/* <a href="/updates">updates</a> */}  
         </nav>
         </div>
