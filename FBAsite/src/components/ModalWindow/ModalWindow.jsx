@@ -50,7 +50,7 @@ function ModalWindow({
     const [
         isLoadingSubmissions,
         setIsLoadingSubmissions
-    ] = useState(false);
+    ] = useState(modalType === "submissions");
 
     const [
         submissionsError,
@@ -94,10 +94,14 @@ function ModalWindow({
     // LOAD SUBMISSIONS
     // =====================================================
 
-    async function loadSubmissions() {
+    function loadSubmissions() {
+        setIsLoadingSubmissions(true);
+        setSubmissionsError("");
+        return fetchSubmissions();
+    }
+
+    async function fetchSubmissions() {
         try {
-            setIsLoadingSubmissions(true);
-            setSubmissionsError("");
 
             console.log(
                 "Loading admin submissions..."
@@ -145,18 +149,8 @@ function ModalWindow({
             return;
         }
 
-        loadSubmissions();
+        fetchSubmissions();
 
-    }, [modalType]);
-
-
-    // =====================================================
-    // CLEAR MESSAGES WHEN CHANGING MODAL
-    // =====================================================
-
-    useEffect(() => {
-        setError("");
-        setSuccess("");
     }, [modalType]);
 
 

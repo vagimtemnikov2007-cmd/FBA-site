@@ -1,0 +1,32 @@
+{
+  "format": 1,
+  "id": "fba:grow_up",
+  "name": "Grow Up",
+  "transform": {
+    "scale": {
+      "x": "0.86 + 0.14 * easeOutQuint(t)",
+      "y": "0.10 + 0.90 * easeOutQuint(t)",
+      "z": "0.86 + 0.14 * easeOutQuint(t)"
+    },
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  },
+  "pivot": [
+    0.5,
+    0.0,
+    0.5
+  ],
+  "ui": {
+    "color": "#9AE6A0",
+    "bold": false,
+    "italic": false
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "format": 1,
+  "id": "custom:pulse",
+  "name": "Pulse",
+  "transform": {
+    "scale": {
+      "x": "0.45 + 0.55 * easeOutQuint(t) + sin(t * PI * 4) * (1 - t) * 0.18",
+      "y": "0.45 + 0.55 * easeOutQuint(t) + sin(t * PI * 4) * (1 - t) * 0.18",
+      "z": "0.45 + 0.55 * easeOutQuint(t) + sin(t * PI * 4) * (1 - t) * 0.18"
+    },
+    "position": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
+    }
+  }
+}

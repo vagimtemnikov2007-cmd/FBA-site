@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./Animationslayout.css";
 
 import Header from "../../components/Header/Header";
@@ -8,7 +8,7 @@ import ModalWindow from "../../components/ModalWindow/ModalWindow";
 import { SORT_TYPES } from "../../service/SortAnimations";
 
 function AnimationsLayout() {
-    const [sortType, setSortType] = useState(SORT_TYPES.NEWEST);
+    const [sortType, setSortType] = useState(SORT_TYPES.POPULAR);
     const [searchQuery, setSearchQuery] = useState("");
     const [modalType, setModalType] = useState(null);
 
@@ -28,6 +28,7 @@ function AnimationsLayout() {
             />
 
             <ModalWindow
+                key={modalType}
                 modalType={modalType}
                 setModalType={setModalType}
             />

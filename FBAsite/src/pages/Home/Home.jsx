@@ -1,4 +1,3 @@
-import React from 'react';
 import './Home.css';
 
 import FBALOGO from '../../assets/FBA-LOGO.png';

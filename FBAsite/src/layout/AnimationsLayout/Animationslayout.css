@@ -1,11 +1,18 @@
 .animations-layout {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: start;
+    gap: 32px;
+    max-width: 1440px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 28px 32px 48px;
 }
-
-@media (max-width: 768px) {
-    .animations-layout {
-        flex-direction: column-reverse;
-    }
+@media (max-width: 900px) {
+    .animations-layout { grid-template-columns: 1fr; gap: 12px; padding: 20px 20px 36px; }
+    .animations-layout > .sidebar { grid-row: 1; }
+}
+@media (max-width: 480px) {
+    .animations-layout { padding: 16px 18px 32px; }
+    .animations-container { gap: 14px; }
 }

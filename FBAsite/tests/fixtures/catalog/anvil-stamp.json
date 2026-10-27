@@ -1,0 +1,28 @@
+{
+  "format": 1,
+  "id": "custom:anvil_stamp",
+  "name": "Anvil Stamp",
+  "rotation_order": "xz",
+  "transform": {
+    "scale": {
+      "x": "0.88 + 0.12 * easeOutQuint(t) + sin(t * PI * 3) * t * (1 - t) * 0.16",
+      "y": "1.18 - 0.18 * easeOutQuint(t) - sin(t * PI * 3) * t * (1 - t) * 0.24",
+      "z": "0.88 + 0.12 * easeOutQuint(t) + sin(t * PI * 3) * t * (1 - t) * 0.16"
+    },
+    "position": {
+      "x": "sideX * sin(t * PI * 8) * (1 - t) * (1 - t) * 0.025",
+      "y": "0.90 * (1 - easeOutQuint(t)) + abs(sin(t * PI * 3)) * t * (1 - t) * 0.035",
+      "z": "sideZ * sin(t * PI * 8) * (1 - t) * (1 - t) * 0.025"
+    },
+    "rotation": {
+      "x": "sin(t * PI * 8) * (1 - t) * (1 - t) * 0.05",
+      "y": 0,
+      "z": "cos(t * PI * 9) * (1 - t) * (1 - t) * 0.05"
+    }
+  },
+  "gecko": {
+    "preset": "impact_shake",
+    "strength": 0.85,
+    "frequency": 1.1
+  }
+}

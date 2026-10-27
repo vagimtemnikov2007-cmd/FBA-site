@@ -1,0 +1,27 @@
+{
+  "format": 1,
+  "id": "custom:jelly_recoil",
+  "name": "Jelly Recoil",
+  "transform": {
+    "scale": {
+      "x": "0.68 + 0.32 * easeOutQuint(t) + sin(t * PI * 7) * (1 - t) * 0.14",
+      "y": "0.68 + 0.32 * easeOutQuint(t) - sin(t * PI * 7) * (1 - t) * 0.20",
+      "z": "0.68 + 0.32 * easeOutQuint(t) + sin(t * PI * 7) * (1 - t) * 0.14"
+    },
+    "position": {
+      "x": "sideX * sin(t * PI * 6) * (1 - t) * (1 - t) * 0.07",
+      "y": "sin(t * PI * 5) * (1 - t) * 0.08",
+      "z": "sideZ * sin(t * PI * 6) * (1 - t) * (1 - t) * 0.07"
+    },
+    "rotation": {
+      "x": "sin(t * PI * 6) * (1 - t) * (1 - t) * 0.10",
+      "y": 0,
+      "z": "cos(t * PI * 7) * (1 - t) * (1 - t) * 0.10"
+    }
+  },
+  "gecko": {
+    "preset": "spring",
+    "strength": 0.75,
+    "frequency": 1.3
+  }
+}

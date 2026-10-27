@@ -1,4 +1,4 @@
-const API_URL = "https://fba-server.onrender.com";
+import { API_URL } from "./config.js";
 
 export async function submitAnimation({
     name,

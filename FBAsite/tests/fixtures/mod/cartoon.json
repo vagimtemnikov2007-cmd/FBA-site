@@ -1,0 +1,28 @@
+{
+  "format": 1,
+  "id": "fba:cartoon",
+  "name": "Cartoon",
+  "rotation_order": "zx",
+  "transform": {
+    "scale": {
+      "x": "0.42 + 0.58 * eased + sin(t * PI) * 0.18 * (1 - t * 0.35) + max(0, -sin(t * PI * 2) * 0.055 * (1 - t))",
+      "y": "0.42 + 0.58 * eased + sin(t * PI) * 0.18 * (1 - t * 0.35) + sin(t * PI * 2) * 0.055 * (1 - t)",
+      "z": "0.42 + 0.58 * eased + sin(t * PI) * 0.18 * (1 - t * 0.35) + max(0, -sin(t * PI * 2) * 0.055 * (1 - t))"
+    },
+    "position": {
+      "x": 0,
+      "y": "sin(t * PI) * 0.16 + 0.10 * (1 - eased)",
+      "z": 0
+    },
+    "rotation": {
+      "x": "-sin(t * PI * 3) * 0.10 * (1 - t) * 0.35",
+      "y": 0,
+      "z": "sin(t * PI * 3) * 0.10 * (1 - t)"
+    }
+  },
+  "ui": {
+    "color": "#FF91CE",
+    "bold": true,
+    "italic": true
+  }
+}

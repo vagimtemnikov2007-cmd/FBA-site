@@ -1,68 +1,99 @@
 .card {
-    background-color: #f1f1f1;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 10px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    transition: 0.5s ease;
-
-} 
-
-.card:hover {
-    background-color: #e6ffe4;
-    transform: scale(1.05);
-}
-
-button, .download-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    color: #203c2a;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: 0.5s ease;
+    outline: none;
 }
-
-
-
-button:hover, .download-button:hover {
-    background-color: #4553a0;
-    transform: scale(1.05);
+.card::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 112px 0 0;
+    border: 1px solid #dde8df;
+    border-radius: 20px;
+    background: #fffefd;
+    box-shadow: 0 5px 18px #294d3010;
+    transition: border-color .2s, box-shadow .2s;
 }
-video {
-    width: 300px;
-    height: auto;
-    border-radius: 4px;
-    margin-top: 10px;
+.card:hover::before,
+.card:focus-within::before {
+    border-color: #b9d2b7;
+    box-shadow: 0 10px 28px #294d301c;
 }
-
-p {
-    margin: 3px;
+.card:focus-visible::before {
+    outline: 2px solid #4c8b53;
+    outline-offset: 3px;
 }
-
-.new-badge {
-
+.card-info {
+    padding: 3px 24px 24px;
+}
+.card-info h2 {
+    margin: 0 0 9px;
+    color: #253e2b;
+    font-size: 20px;
+    line-height: 1.25;
+    font-weight: 650;
+    letter-spacing: -.5px;
+    overflow-wrap: anywhere;
+}
+.card-author {
+    margin: 0;
+    color: #819082;
+    font-size: 12px;
+    line-height: 1.6;
+}
+.card-author span { color: #607864; }
+.card-date {
+    display: block;
+    margin-top: 4px;
+    color: #96a096;
+    font-size: 11px;
+    line-height: 1.5;
+}
+.card .download-button {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 10px;
-    margin-bottom: 8px;
-
-    border-radius: 6px;
-
-    background: #7d2eccb1;
-    color: white;
-
+    gap: 7px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 19px 0 0;
+    padding: 10px 14px;
+    border: 1px solid #dce8da;
+    border-radius: 9px;
+    background: #f0f6ec;
+    color: #447147;
     font-size: 12px;
-    font-weight: 700;
-
+    line-height: 1.5;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .2s, color .2s, border-color .2s;
+}
+.card .download-button svg { width: 17px; height: 17px; }
+.card .download-button:hover,
+.card .download-button:focus-visible {
+    background: #377345;
+    color: #fff;
+    border-color: #377345;
+    transform: none;
+}
+.card .download-button:focus-visible { outline: 2px solid #4c8b53; outline-offset: 3px; }
+.card .new-badge {
+    position: absolute;
+    z-index: 2;
+    top: 127px;
+    right: 13px;
+    padding: 4px 7px;
+    border-radius: 5px;
+    background: #eff5e6;
+    color: #6d8d44;
+    font-size: 9px;
+    line-height: 1;
     letter-spacing: 1px;
+    font-weight: 700;
 }

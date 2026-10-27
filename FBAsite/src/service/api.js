@@ -1,4 +1,4 @@
-const API_URL = "https://fba-server.onrender.com";
+import { API_URL, normalizeCatalog } from "./config.js";
 
 const sleep = (ms) => {
     return new Promise((resolve) =>
@@ -102,7 +102,7 @@ export function getAnimations() {
                     ]
                 );
 
-            return await response.json();
+            return normalizeCatalog(await response.json());
 
         } finally {
 

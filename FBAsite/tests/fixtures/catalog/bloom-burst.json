@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "custom:bloom_burst",
+  "name": "Bloom Burst",
+  "rotation_order": "zxy",
+  "transform": {
+    "scale": {
+      "x": "0.18 + 0.82 * easeOutBack(t) + sin(t * PI * 4) * (1 - t) * 0.07",
+      "y": "1.55 - 0.55 * easeOutQuint(t) - sin(t * PI * 4) * (1 - t) * 0.11",
+      "z": "0.18 + 0.82 * easeOutBack(t) + sin(t * PI * 4) * (1 - t) * 0.07"
+    },
+    "position": {
+      "x": "sideX * sin(t * PI * 2) * (1 - t) * 0.12",
+      "y": "-0.22 * (1 - eased) + sin(t * PI) * 0.18",
+      "z": "sideZ * sin(t * PI * 2) * (1 - t) * 0.12"
+    },
+    "rotation": {
+      "x": "(1 - eased) * -0.30 + sin(t * PI * 4) * (1 - t) * 0.06",
+      "y": "(1 - eased) * PI + sin(t * PI * 2) * (1 - t) * 0.18",
+      "z": "(1 - eased) * 0.30 - sin(t * PI * 4) * (1 - t) * 0.06"
+    }
+  }
+}

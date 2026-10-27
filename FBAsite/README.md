@@ -1,16 +1,118 @@
-# React + Vite
+# FBASITE — интерактивные JSON-анимации
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React/Vite сайт Fresh Block Animations. Карточки воспроизводят исходные
+анимации на Three.js вместо загрузки WebM.
 
-Currently, two official plugins are available:
+## Запуск
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm ci
+npm run dev
+```
 
-## React Compiler
+По умолчанию API — `https://fba-server.onrender.com`. Для локального
+FBA-server скопируйте [.env.example](.env.example) в `.env.local` и задайте
+`VITE_API_URL`. Перезапустите Vite после изменения переменной.
+R2 и Supabase настраиваются только на сервере.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Просмотр карточки
 
-## Expanding the ESLint configuration
+- Каталог по умолчанию отсортирован по популярности — числу скачиваний.
+  В боковой панели можно выбрать Most Popular, Most Recent или Name.
+  Сами счётчики не отображаются: API передаёт только `popularity_rank`.
+  При равенстве скачиваний выше новая анимация. Рейтинг обновляется вместе
+  с серверным кэшем каталога; сохранённые старые карточки без рейтинга
+  сортируются по дате до получения свежего ответа API.
+- В покое блок показан в конечной позе без постоянной отрисовки.
+- Наведение на любую часть карточки запускает повторение анимации.
+  Скорость — **1×**, длительность берётся из JSON. Для файлов без своей
+  длительности используется 1 секунда по умолчанию.
+- Уход курсора возвращает блок в статичный вид.
+- Фокус с клавиатуры и касание карточки также запускают просмотр.
+- Блок на прозрачном фоне выступает над верхней границей белой карточки.
+  Название, автор и дата размещены снизу по центру.
+- Настройки просмотра, ползунок, импорт и переключатели убраны из карточек.
+- Download скачивает оригинал из каталога. При ошибке загрузки превью
+  появляется компактная кнопка Retry.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Превью использует эталонный куб с процедурными текстурами травы.
+Игровые модели, освещение мира,
+shaderpack, дополнительные GeckoLib-слои и текстурные overlay-эффекты
+в браузере не воспроизводятся. Основные формулы Gecko-пресетов работают
+как обычные transform-анимации.
+
+## Поддерживаемый JSON
+
+Formats 1/2: числовые значения и выражения `transform.position/scale/rotation`,
+повороты в радианах, `rotation_order`, старые pivot-пресеты и компенсация
+масштаба. `material.opacity` принимает число или выражение.
+Доступны `t`, `eased`/`e`, направления и боковые векторы,
+`PI`/`pi`, `E`, арифметика, тригонометрия, clamp и функции easing.
+`lerp` использует порядок аргументов FBA: `lerp(t, a, b)`.
+Выражения разбираются собственным ограниченным парсером, без `eval`.
+
+Format 3: векторные и компонентные transform-треки, `material.opacity`,
+линейная/ступенчатая интерполяция, easing начального ключа, нормализованное
+время 0…1, preset/settings duration, углы degrees/radians и общий pivot
+для вращения и масштаба. Неподдерживаемые material/secondary-треки дают
+сообщение о несовместимости.
+
+Вычислительная часть сверена с классами установленного FBA 1.4 RC3 Hotfix1:
+16 выражений и 34 анимации в 10 точках времени. Подробности, исправления
+и ограничения описаны в [аудите совместимости](docs/runtime-compatibility.md).
+Полный игровой рендер мода в браузер не переносился.
+
+## Cloudflare и кэш
+
+FBA-server читает R2 `fba/jsons/` и возвращает в `/animations` адреса
+`animation_url` и `download_url`. Браузер обращается к JSON API сервера;
+видеофайлы и секретные ключи R2 для превью не нужны. Версия ETag в URL
+позволяет обновлять изменённые анимации. Относительные адреса API
+разрешаются относительно `VITE_API_URL`.
+
+`localStorage` хранит карточки в `fba_animations` и исходные JSON в
+`fba_animation_json_v1`: до 48 файлов, около 1,5 МБ. Свежий кэш используется
+без повторного запроса; файлы старше суток обновляются, а при сбое сети
+остаётся последняя рабочая копия. Подстановки из прежней панели настроек
+заменяются исходниками каталога. Большой JSON может проигрываться
+без сохранения; максимальный размер входного файла — 2 МБ.
+Отключённый или заполненный storage не мешает загрузке и проигрыванию.
+Кэш данных не обеспечивает запуск самого сайта при полном отсутствии сети.
+
+Three.js загружается отдельным модулем при появлении превью. Один WebGL-контекст
+обслуживает видимые карточки через их canvas, с общими геометриями/текстурами.
+Частота ограничена 30 fps, плотность пикселей — 1,5. Невидимые карточки
+не рисуются; скрытая вкладка останавливает рендер. Уход со страницы освобождает
+геометрии, материалы, текстуры и контекст. При reduced motion показан
+статичный финальный кадр, включая наведение и фокус.
+
+## Проверки
+
+```bash
+npm test
+npm run lint
+npm run build
+npx playwright install chromium
+npm run test:browser
+FBA_SERVER_ROOT=/путь/к/FBA-server npm run test:integration
+```
+
+Модульные проверки используют все 11 настоящих JSON каталога и четыре
+пресета из предоставленного JAR FBA 1.4. Проверены формулы, ключи,
+защита парсера, URL, локальный кэш и ошибки загрузки. Браузерные
+проверок покрывают прозрачный выступающий блок, центрирование информации,
+наведение/остановку, длительность JSON при скорости 1×, клавиатуру и мобильный экран,
+кэш, отсутствие storage, 100 карточек с одним контекстом,
+остановку скрытой вкладки и освобождение GPU-ресурсов. Прозрачность форматов
+2/3 дополнительно проверяется по фактическим пикселям canvas.
+
+Общий интеграционный прогон запускает настоящий Express API через новый
+R2-адаптер с локальными исходными JSON, затем Vite и Chromium; проверяет
+каталог → API → Three.js → localStorage и скачивание. Рабочие Cloudflare,
+Supabase, статистика и администраторские операции в нём не используются.
+[Снимок этого прогона](docs/live-json-preview.png).
+
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE` позволяет использовать уже установленный
+Chromium. `FBA_LIVE_NETWORK=1 npm run test:browser` добавляет необязательную
+проверку опубликованного API после развёртывания; сетевые записи в ней
+подменяются локальными ответами.

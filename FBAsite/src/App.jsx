@@ -7,11 +7,13 @@ import { trackVisitor } from './service/api'
 import './App.css'
 
 
+let temporaryVisitorID;
 function getVisitorID() {
-    let id = localStorage.getItem('visitorID');
+    let id;
+    try { id = localStorage.getItem('visitorID'); } catch { /* Storage can be disabled. */ }
     if (!id) {
-      id = crypto.randomUUID();
-      localStorage.setItem('visitorID', id);
+      id = temporaryVisitorID ??= crypto.randomUUID();
+      try { localStorage.setItem('visitorID', id); } catch { /* Keep the current session working. */ }
     }
     return id;
     
@@ -22,7 +24,8 @@ function App() {
 
 useEffect(() => {
     const today = new Date().toISOString().slice(0, 10);
-    const lastVisitDate = localStorage.getItem("lastVisitDate");
+    let lastVisitDate;
+    try { lastVisitDate = localStorage.getItem("lastVisitDate"); } catch { /* Optional persistence. */ }
 
     if (lastVisitDate === today) {
         return;
@@ -34,7 +37,7 @@ useEffect(() => {
         .then(data => {
             console.log("Visitor tracked:", data);
 
-            localStorage.setItem("lastVisitDate", today);
+            try { localStorage.setItem("lastVisitDate", today); } catch { /* Optional persistence. */ }
         })
         .catch(error => {
             console.error(

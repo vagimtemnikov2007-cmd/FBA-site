@@ -11,16 +11,13 @@ import {
 } from './service/admin.js'
 
 
-const redirectPath = sessionStorage.getItem('redirectPath');
-
-if (redirectPath) {
-    sessionStorage.removeItem('redirectPath');
-    window.history.replaceState(
-        null,
-        '',
-        redirectPath
-    );
-}
+try {
+    const redirectPath = sessionStorage.getItem('redirectPath');
+    if (redirectPath) {
+        sessionStorage.removeItem('redirectPath');
+        window.history.replaceState(null, '', redirectPath);
+    }
+} catch { /* Browser storage can be unavailable without preventing the app from opening. */ }
 
 
 // ---------------------------------

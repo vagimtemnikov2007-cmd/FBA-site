@@ -1,0 +1,36 @@
+{
+  "$schema": "../schemas/animation-v3-1.3.9_1.schema.json",
+  "format": 3,
+  "timeline": {
+    "duration_source": "settings"
+  },
+  "pivot": "group_center",
+  "rotation": {
+    "unit": "degrees",
+    "order": "xyz"
+  },
+  "id": "fba:keyframe_fade_in",
+  "name": "Fade In",
+  "tracks": {
+    "material.opacity": {
+      "interpolation": "linear",
+      "keyframes": [
+        {
+          "t": 0,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "t": 1,
+          "value": 1
+        }
+      ]
+    }
+  },
+  "internal": true,
+  "ui": {
+    "color": "#B7E4E3",
+    "bold": false,
+    "italic": true
+  }
+}

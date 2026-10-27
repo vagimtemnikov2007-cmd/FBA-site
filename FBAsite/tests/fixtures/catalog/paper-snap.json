@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "custom:paper_snap",
+  "name": "Paper Snap",
+  "rotation_order": "xzy",
+  "transform": {
+    "scale": {
+      "x": "0.72 + 0.28 * easeOutQuint(t)",
+      "y": "0.10 + 0.90 * easeOutBack(t)",
+      "z": "0.96 + 0.04 * easeOutQuint(t)"
+    },
+    "position": {
+      "x": "sideX * 0.34 * (1 - eased)",
+      "y": "0.28 * (1 - eased) + sin(t * PI) * 0.10",
+      "z": "sideZ * 0.34 * (1 - eased)"
+    },
+    "rotation": {
+      "x": "(1 - eased) * PI / 2 + sin(t * PI * 3) * (1 - t) * 0.09",
+      "y": "(1 - eased) * -0.32",
+      "z": "(1 - eased) * 0.18"
+    }
+  }
+}

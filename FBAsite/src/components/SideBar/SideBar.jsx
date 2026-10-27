@@ -16,12 +16,6 @@ function SideBar({
 
     const [isAdmin, setIsAdmin] = useState(false);
 
-    const [
-        countSubmissionsAnimations,
-        setCountSubmissionsAnimations
-    ] = useState(0);
-
-
     // ---------------------------------
     // CHECK ADMIN
     // ---------------------------------
@@ -47,25 +41,6 @@ function SideBar({
     }, []);
 
 
-    // ---------------------------------
-    // SORT
-    // ---------------------------------
-
-    function changeSort() {
-        if (sortType === SORT_TYPES.NEWEST) {
-            setSortType(SORT_TYPES.NAME);
-        } else {
-            setSortType(SORT_TYPES.NEWEST);
-        }
-    }
-
-
-    const sortLabel =
-        sortType === SORT_TYPES.NEWEST
-            ? "Most Recent"
-            : "Name";
-
-
     return (
         <div className="sidebar">
 
@@ -80,9 +55,14 @@ function SideBar({
             />
 
 
-            <button onClick={changeSort}>
-                Sort by: {sortLabel}
-            </button>
+            <label className="sort-control">
+                <span>Sort by</span>
+                <select value={sortType} onChange={event => setSortType(event.target.value)}>
+                    <option value={SORT_TYPES.POPULAR}>Most Popular</option>
+                    <option value={SORT_TYPES.NEWEST}>Most Recent</option>
+                    <option value={SORT_TYPES.NAME}>Name</option>
+                </select>
+            </label>
 
 
             {/* PUBLIC BUTTON */}

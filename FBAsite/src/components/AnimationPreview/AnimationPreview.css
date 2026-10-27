@@ -1,0 +1,56 @@
+.animation-preview {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 224px;
+    pointer-events: none;
+}
+.animation-preview-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.animation-preview-shadow {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    width: 98px;
+    height: 12px;
+    border-radius: 50%;
+    background: #3c573b24;
+    filter: blur(7px);
+    transform: translateX(-50%);
+    pointer-events: none;
+}
+.animation-preview-placeholder {
+    position: absolute;
+    width: 116px;
+    height: 134px;
+    left: 50%;
+    top: 65px;
+    transform: translateX(-50%);
+}
+.animation-preview-error {
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #7d857b;
+    font: 11px/1.4 system-ui, sans-serif;
+    pointer-events: auto;
+}
+.animation-preview-error button {
+    margin: 0;
+    padding: 2px 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    color: #346e42;
+    font: inherit;
+    text-decoration: underline;
+    transform: none;
+}

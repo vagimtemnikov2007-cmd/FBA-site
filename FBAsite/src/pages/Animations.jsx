@@ -3,35 +3,10 @@ import Card from "../components/Card/Card";
 import { getAnimations } from "../service/api";
 import { sortAnimations } from "../service/SortAnimations";
 import "./Animations.css";
-
-const CACHE_KEY = "fba_animations";
-const CACHE_VERSION = 1;
+import { readCatalog, storeCatalog } from "../animation/storage";
 
 const RETRY_COUNT = 3;
 const RETRY_DELAY = 1500;
-
-function getCachedAnimations() {
-    try {
-        const cached = localStorage.getItem(CACHE_KEY);
-
-        if (!cached) {
-            return [];
-        }
-
-        const parsed = JSON.parse(cached);
-
-        if (parsed.version !== CACHE_VERSION) {
-            localStorage.removeItem(CACHE_KEY);
-            return [];
-        }
-
-        return parsed.data ?? [];
-    } catch (error) {
-        console.error("Failed to read animations cache:", error);
-        localStorage.removeItem(CACHE_KEY);
-        return [];
-    }
-}
 
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -62,39 +37,32 @@ async function getAnimationsWithRetry() {
 
 function AnimationsPage({ sortType, searchQuery }) {
     const [animations, setAnimations] = useState(() =>
-        getCachedAnimations()
+        readCatalog()
     );
 
     const [loading, setLoading] = useState(animations.length === 0);
     const [error, setError] = useState(false);
 
-    async function loadAnimations() {
-        try {
-            setError(false);
-
-            const data = await getAnimationsWithRetry();
+    function loadAnimations() {
+        return getAnimationsWithRetry().then(data => {
+            if (!Array.isArray(data)) throw new Error("Invalid animation catalog");
 
             setAnimations(data);
 
-            localStorage.setItem(
-                CACHE_KEY,
-                JSON.stringify({
-                    version: CACHE_VERSION,
-                    updatedAt: Date.now(),
-                    data
-                })
-            );
-        } catch (error) {
+            storeCatalog(data);
+        }).catch(error => {
             console.error("Failed to load animations:", error);
             setError(true);
-        } finally {
-            setLoading(false);
-        }
+        }).finally(() => setLoading(false));
     }
 
     useEffect(() => {
         loadAnimations();
     }, []);
+
+    function retryLoad() {
+        setError(false); setLoading(true); loadAnimations();
+    }
 
     const filteredAnimations = useMemo(() => {
         const query = searchQuery.trim().toLowerCase();
@@ -124,7 +92,7 @@ function AnimationsPage({ sortType, searchQuery }) {
         return (
             <div className="animations-status">
                 <p>Failed to load animations.</p>
-                <button onClick={loadAnimations}>
+                <button onClick={retryLoad}>
                     Try again
                 </button>
             </div>
@@ -139,7 +107,7 @@ function AnimationsPage({ sortType, searchQuery }) {
                     id={animation.id}
                     name={animation.name}
                     author={animation.author}
-                    previewUrl={animation.preview_url}
+                    animationUrl={animation.animation_url || animation.json_url}
                     downloadUrl={animation.download_url}
                     created_at={animation.created_at}
                 />

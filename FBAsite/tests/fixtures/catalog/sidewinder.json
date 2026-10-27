@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "custom:sidewinder",
+  "name": "Sidewinder",
+  "rotation_order": "yz",
+  "transform": {
+    "scale": {
+      "x": "0.76 + 0.24 * easeOutQuint(t)",
+      "y": "0.76 + 0.24 * easeOutQuint(t)",
+      "z": "0.76 + 0.24 * easeOutQuint(t)"
+    },
+    "position": {
+      "x": "sideX * sin(t * PI * 5) * (1 - t) * 0.42 - directionX * 0.18 * (1 - eased)",
+      "y": "abs(sin(t * PI * 2)) * (1 - t) * 0.10",
+      "z": "sideZ * sin(t * PI * 5) * (1 - t) * 0.42 - directionZ * 0.18 * (1 - eased)"
+    },
+    "rotation": {
+      "x": 0,
+      "y": "sin(t * PI * 5) * (1 - t) * 0.55",
+      "z": "sin(t * PI * 5) * (1 - t) * -0.22"
+    }
+  }
+}

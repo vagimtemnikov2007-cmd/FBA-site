@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "custom:phase_flicker",
+  "name": "Phase Flicker",
+  "rotation_order": "zyx",
+  "transform": {
+    "scale": {
+      "x": "0.50 + 0.50 * easeOutQuint(t) + abs(sin(t * PI * 9)) * (1 - t) * 0.10",
+      "y": "0.50 + 0.50 * easeOutQuint(t) - abs(sin(t * PI * 9)) * (1 - t) * 0.07",
+      "z": "0.50 + 0.50 * easeOutQuint(t) + abs(cos(t * PI * 9)) * (1 - t) * 0.08"
+    },
+    "position": {
+      "x": "sideX * sin(t * PI * 13) * (1 - t) * 0.16",
+      "y": "sin(t * PI * 11) * (1 - t) * 0.08",
+      "z": "sideZ * sin(t * PI * 13) * (1 - t) * 0.16"
+    },
+    "rotation": {
+      "x": "sin(t * PI * 11) * (1 - t) * 0.20",
+      "y": "sin(t * PI * 13) * (1 - t) * 0.34",
+      "z": "cos(t * PI * 12) * (1 - t) * 0.18"
+    }
+  }
+}

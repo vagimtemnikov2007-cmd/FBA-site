@@ -1,0 +1,67 @@
+{
+  "$schema": "../schemas/animation-v3-1.3.9_1.schema.json",
+  "format": 3,
+  "timeline": {
+    "duration_source": "settings"
+  },
+  "pivot": "group_center",
+  "rotation": {
+    "unit": "degrees",
+    "order": "xyz"
+  },
+  "id": "fba:keyframe_pop",
+  "name": "Pop",
+  "tracks": {
+    "transform.scale": {
+      "interpolation": "linear",
+      "keyframes": [
+        {
+          "t": 0,
+          "value": [
+            0.15,
+            0.15,
+            0.15
+          ],
+          "easing": "easeOutCubic"
+        },
+        {
+          "t": 0.7,
+          "value": [
+            1.08,
+            1.08,
+            1.08
+          ],
+          "easing": "easeInOutCubic"
+        },
+        {
+          "t": 1,
+          "value": [
+            1,
+            1,
+            1
+          ]
+        }
+      ]
+    },
+    "material.opacity": {
+      "interpolation": "linear",
+      "keyframes": [
+        {
+          "t": 0,
+          "value": 0,
+          "easing": "easeInOutCubic"
+        },
+        {
+          "t": 0.25,
+          "value": 1
+        }
+      ]
+    }
+  },
+  "internal": true,
+  "ui": {
+    "color": "#FFB86B",
+    "bold": true,
+    "italic": false
+  }
+}

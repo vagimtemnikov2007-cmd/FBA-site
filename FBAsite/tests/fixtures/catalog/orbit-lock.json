@@ -1,0 +1,28 @@
+{
+  "format": 1,
+  "id": "custom:orbit_lock",
+  "name": "Orbit Lock",
+  "rotation_order": "yzx",
+  "transform": {
+    "scale": {
+      "x": "0.58 + 0.42 * easeOutQuint(t) + sin(t * PI * 4) * (1 - t) * 0.05",
+      "y": "0.58 + 0.42 * easeOutQuint(t) - sin(t * PI * 4) * (1 - t) * 0.04",
+      "z": "0.58 + 0.42 * easeOutQuint(t) + sin(t * PI * 4) * (1 - t) * 0.05"
+    },
+    "position": {
+      "x": "-directionX * 0.32 * (1 - eased) + sideX * sin(t * PI * 4) * (1 - t) * 0.22",
+      "y": "sin(t * PI * 2) * (1 - t) * 0.16",
+      "z": "-directionZ * 0.32 * (1 - eased) + sideZ * sin(t * PI * 4) * (1 - t) * 0.22"
+    },
+    "rotation": {
+      "x": "sin(t * PI * 4) * (1 - t) * 0.18",
+      "y": "(1 - eased) * PI * 2 + sin(t * PI * 6) * (1 - t) * 0.12",
+      "z": "cos(t * PI * 4) * (1 - t) * 0.16"
+    }
+  },
+  "gecko": {
+    "preset": "twist",
+    "strength": 0.65,
+    "frequency": 1.15
+  }
+}

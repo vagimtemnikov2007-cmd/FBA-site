@@ -1,0 +1,23 @@
+{
+  "format": 1,
+  "id": "custom:magnetic_slingshot",
+  "name": "Magnetic Slingshot",
+  "rotation_order": "zyx",
+  "transform": {
+    "scale": {
+      "x": "0.78 + 0.22 * easeOutQuint(t) - sin(t * PI * 2) * (1 - t) * 0.08",
+      "y": "0.78 + 0.22 * easeOutQuint(t) + sin(t * PI * 2) * (1 - t) * 0.14",
+      "z": "0.78 + 0.22 * easeOutQuint(t) - sin(t * PI * 2) * (1 - t) * 0.08"
+    },
+    "position": {
+      "x": "-directionX * 0.70 * (1 - easeOutQuint(t)) + directionX * sin(t * PI * 2) * (1 - t) * 0.16 + sideX * sin(t * PI * 5) * (1 - t) * 0.05",
+      "y": "-directionY * 0.70 * (1 - easeOutQuint(t)) + directionY * sin(t * PI * 2) * (1 - t) * 0.16 + sin(t * PI) * 0.06",
+      "z": "-directionZ * 0.70 * (1 - easeOutQuint(t)) + directionZ * sin(t * PI * 2) * (1 - t) * 0.16 + sideZ * sin(t * PI * 5) * (1 - t) * 0.05"
+    },
+    "rotation": {
+      "x": "sin(t * PI * 3) * (1 - t) * 0.22",
+      "y": "sin(t * PI * 2) * (1 - t) * 0.28",
+      "z": "-sin(t * PI * 4) * (1 - t) * 0.16"
+    }
+  }
+}
