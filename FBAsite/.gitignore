@@ -10,9 +10,22 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-test-results
-playwright-report
 *.local
+
+# Local tests, fixtures, reference tools, and browser configuration
+/tests/
+/playwright.config.*
+
+# Test results, browser traces, screenshots, and coverage
+/test-results/
+/playwright-report/
+/blob-report/
+/coverage/
+/.nyc_output/
+/.playwright/
+/playwright/.cache/
+/docs/live-json-preview.png
+/docs/runtime-compatibility.md
 
 # Editor directories and files
 .vscode/*

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { Routes , Route} from 'react-router-dom'
 import AnimationsLayout from './layout/AnimationsLayout/Animationslayout'
 import HomeLayout from './layout/HomeLayout/Homelayout'
@@ -6,6 +6,7 @@ import HelpLayout from './layout/Help/HelpLayout'
 import { trackVisitor } from './service/api'
 import './App.css'
 
+const Editor = lazy(() => import('./pages/Editor/Editor.jsx'))
 
 let temporaryVisitorID;
 function getVisitorID() {
@@ -54,6 +55,7 @@ useEffect(() => {
       <Route path='/animations' element={<AnimationsLayout />}/>
       <Route path='/' element={<HomeLayout />}/>
       <Route path='/Help' element={<HelpLayout />}/>
+      <Route path='/editor' element={<Suspense fallback={<p role="status">Loading editor…</p>}><Editor /></Suspense>}/>
     </Routes>
     </>
   )

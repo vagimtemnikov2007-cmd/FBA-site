@@ -48,6 +48,8 @@
     line-height: 1.6;
 }
 .card-author span { color: #607864; }
+.card .card-edit-link { display: inline-block; margin-top: 9px; color: #789379; font-size: 11px; }
+.card .card-edit-link:hover { color: #377345; transform: none; text-decoration: underline; }
 .card-date {
     display: block;
     margin-top: 4px;

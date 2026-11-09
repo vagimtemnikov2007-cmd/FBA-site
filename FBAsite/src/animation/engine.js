@@ -73,14 +73,25 @@ class PreviewEngine {
         const duration = Math.max(.001, (animation.durationMs ?? 1000) / 1000);
         const entry = { canvas, context, scene, block, transform, camera, animation, materials,
             visible: false, dirty: true, paused: true, loop: options.loop ?? true,
-            elapsed: duration, duration,
+            elapsed: duration, duration, manualProgress: null,
             lastTime: performance.now(), yaw: .78, pitch: .52, distance: 3.8,
             onError: options.onError ?? (() => {}) };
         this.setBlock(entry, "grass");
         this.entries.add(entry); this.observer.observe(canvas); this.resize.observe(canvas); this.schedule();
         return {
-            play: () => { entry.elapsed = 0; entry.paused = false; entry.lastTime = performance.now(); entry.dirty = true; this.schedule(); },
-            rest: () => { entry.elapsed = entry.duration; entry.paused = true; entry.dirty = true; this.schedule(); },
+            play: () => { entry.manualProgress = null; entry.elapsed = 0; entry.paused = false; entry.lastTime = performance.now(); entry.dirty = true; this.schedule(); },
+            rest: () => { entry.manualProgress = null; entry.elapsed = entry.duration; entry.paused = true; entry.dirty = true; this.schedule(); },
+            seek: progress => { entry.manualProgress = clamp(progress); entry.paused = true; entry.dirty = true; this.schedule(); },
+            setAnimation: value => { entry.animation = value; entry.duration = Math.max(.001, (value.durationMs ?? 1000) / 1000); entry.dirty = true; this.schedule(); },
+            setBlock: name => { this.setBlock(entry, name); entry.dirty = true; this.schedule(); },
+            setView: (yaw, pitch, distance = entry.distance) => { entry.yaw = yaw; entry.pitch = clamp(pitch, -.5, 1.4); entry.distance = clamp(distance, 2, 12); entry.dirty = true; this.schedule(); },
+            enableEditor: async options => {
+                const { attachEditorScene } = await import('./editor-scene.js');
+                if (entry.disposed) return;
+                entry.editor = attachEditorScene(entry, options, () => this.schedule());
+                entry.dirty = true; this.schedule();
+            },
+            configureEditor: options => entry.editor?.configure(options),
             dispose: () => this.remove(entry),
         };
     }
@@ -105,10 +116,10 @@ class PreviewEngine {
             try {
                 if (!entry.paused) entry.elapsed += Math.max(0, (now - entry.lastTime) / 1000);
                 entry.lastTime = now;
-                const progress = entry.paused ? 1 : entry.loop ? (entry.elapsed % entry.duration) / entry.duration : Math.min(1, entry.elapsed / entry.duration);
+                const progress = entry.manualProgress ?? (entry.paused ? 1 : entry.loop ? (entry.elapsed % entry.duration) / entry.duration : Math.min(1, entry.elapsed / entry.duration));
                 if (!entry.loop && progress === 1) entry.paused = true;
                 const pose = entry.animation.sample(progress);
-                applyAnimationPose(entry.animation, pose, entry.transform, entry.block);
+                if (!entry.editor?.controls.dragging) applyAnimationPose(entry.animation, pose, entry.transform, entry.block);
                 entry.block.visible = pose.opacity > 0;
                 for (const material of entry.materials) material.opacity = pose.opacity;
                 const { width, height } = entry.canvas.getBoundingClientRect();
@@ -129,6 +140,8 @@ class PreviewEngine {
     }
 
     remove(entry) {
+        entry.disposed = true;
+        entry.editor?.dispose();
         this.observer.unobserve(entry.canvas); this.resize.unobserve(entry.canvas);
         for (const material of entry.materials) material.dispose();
         entry.scene.clear(); this.entries.delete(entry);

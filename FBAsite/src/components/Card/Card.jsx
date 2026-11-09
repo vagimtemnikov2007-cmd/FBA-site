@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import { Link } from 'react-router-dom';
 import "./Card.css";
 import { trackDownload } from "../../service/api";
 import AnimationPreview from "../AnimationPreview/AnimationPreview";
@@ -47,6 +48,7 @@ function Card({ id, name, author, animationUrl, downloadUrl, created_at }) {
                     </svg>
                     Download
                 </a>
+                {(animationUrl || downloadUrl) && <Link className="card-edit-link" to={`/editor?source=${encodeURIComponent(animationUrl || downloadUrl)}`}>Edit ↗</Link>}
             </div>
         </article>
     );

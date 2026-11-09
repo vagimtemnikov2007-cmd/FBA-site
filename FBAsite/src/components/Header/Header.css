@@ -4,18 +4,21 @@
     justify-content: center;
     background-color: rgba(0, 0, 0, 0.733);
     backdrop-filter: blur(12px);
-    gap: 100px;
-    height: 100px;
+    gap: clamp(20px, 6vw, 100px);
+    min-height: 100px;
+    padding: 10px 20px;
+    box-sizing: border-box;
 }
 
 .logo {
-    width: 400px;
+    width: min(400px, 40vw);
     
 }
 
 nav {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
 }
 
 .active {
@@ -42,6 +45,7 @@ a:hover {
         
         height: auto;
         gap: 10px;
+        flex-wrap: wrap;
     }
 
     .logo {
@@ -49,8 +53,9 @@ a:hover {
     }
 
     nav {
-        flex-direction: column;
-        gap: 10px;
+        justify-content: center;
+        gap: 10px 16px;
+        font-size: 14px;
     }
     
 }

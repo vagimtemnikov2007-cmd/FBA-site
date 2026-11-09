@@ -17,16 +17,17 @@ import {
 function ModalWindow({
     modalType,
     setModalType,
+    initialAnimation,
 }) {
 
     // =====================================================
     // FORM STATE
     // =====================================================
 
-    const [name, setName] = useState("");
+    const [name, setName] = useState(initialAnimation?.name ?? "");
     const [author, setAuthor] = useState("");
     const [mail, setMail] = useState("");
-    const [file, setFile] = useState(null);
+    const [file, setFile] = useState(initialAnimation?.file ?? null);
 
     const [isSubmitting, setIsSubmitting] =
         useState(false);

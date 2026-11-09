@@ -59,23 +59,29 @@ async function readResponse(response) {
     catch { throw new Error("The download link did not return an animation JSON file"); }
 }
 
-export async function loadAnimation(source, { refresh = false, localOnly = false, allowImported = true } = {}) {
+export async function loadAnimationDocument(source, { refresh = false, localOnly = false, allowImported = true } = {}) {
     const url = animationUrl(source);
     let cached = null;
     if (!refresh) {
         const entry = readStored(JSON_CACHE_KEY, {})?.[url];
         if (entry?.json && (allowImported || !entry.imported)) {
-            try { cached = compileAnimation(entry.json); } catch { /* Replace invalid cached data from the actual file. */ }
+            try { compileAnimation(entry.json); cached = entry.json; } catch { /* Replace invalid cached data from the actual file. */ }
             if (cached && (entry.imported || Date.now() - entry.updatedAt < 86400000)) return cached;
         }
     }
     if (localOnly) throw new Error("This animation needs a JSON download link or a local JSON file");
     const request = pending.get(url) ?? (async () => {
         const response = await fetch(url, { signal: AbortSignal.timeout(20000) });
-        return storeAnimation(url, await readResponse(response));
+        const json = await readResponse(response);
+        storeAnimation(url, json);
+        return json;
     })();
     pending.set(url, request);
     try { return await request; }
     catch (error) { if (cached && !refresh) return cached; throw error; }
     finally { if (pending.get(url) === request) pending.delete(url); }
+}
+
+export async function loadAnimation(source, options) {
+    return compileAnimation(await loadAnimationDocument(source, options));
 }
