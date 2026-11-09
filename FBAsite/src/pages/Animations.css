@@ -1,7 +1,37 @@
+.animations-results {
+    min-width: 0;
+}
+
 .animations-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
     align-items: start;
     gap: 26px;
     min-width: 0;
+}
+
+.animations-load-more {
+    display: flex;
+    justify-content: center;
+    padding: 28px 0 8px;
+}
+
+.animations-load-more button {
+    margin: 0;
+    padding: 10px 20px;
+    border: 1px solid #b9d2b7;
+    border-radius: 9px;
+    background: #f0f6ec;
+    color: #447147;
+    font: 600 12px/1.5 system-ui, sans-serif;
+}
+
+.animations-load-more button:hover {
+    background: #377345;
+    color: #fff;
+}
+
+.animations-load-more button:focus-visible {
+    outline: 2px solid #4c8b53;
+    outline-offset: 3px;
 }
